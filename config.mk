@@ -7,6 +7,8 @@ VERSION = 6.2
 PREFIX = $(HOME)/.local
 MANPREFIX = ${PREFIX}/share/man
 
+WALCACHE = $(HOME)/.cache/wal
+
 X11INC = /usr/X11R6/include
 X11LIB = /usr/X11R6/lib
 
