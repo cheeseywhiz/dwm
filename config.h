@@ -54,6 +54,15 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", norm_bg, "-nf", norm_fg, "-sb", sel_bg, "-sf", sel_fg, NULL };
 static const char *termcmd[]  = { "st", NULL };
+/* sink tended to switch between 1 and 0 on old machine */
+#define SINK "0"
+static const char *mutecmd[] = { "pactl", "set-sink-mute", SINK, "toggle", NULL };
+static const char *lowervolumecmd[] = { "pactl", "set-sink-volume", SINK, "-5%", NULL };
+static const char *raisevolumecmd[] = { "pactl", "set-sink-volume", SINK, "+5%", NULL };
+static const char *dimcmd[] = { "xbacklight", "-dec", "10", NULL };
+static const char *brightcmd[] = { "xbacklight", "-inc", "10", NULL };
+static const char *fulldimcmd[] = { "xbacklight", "-set", "1", NULL };
+static const char *fullbrightcmd[] = { "xbacklight", "-set", "100", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -90,6 +99,14 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask|ControlMask, XK_q,      quit,           {0} },
+	{ 0,                            XF86XK_AudioMute,         spawn, {.v = mutecmd } },
+	{ 0,                            XF86XK_AudioLowerVolume,  spawn, {.v = lowervolumecmd } },
+	{ 0,                            XF86XK_AudioRaiseVolume,  spawn, {.v = raisevolumecmd } },
+	{ 0,                            XF86XK_Search,            spawn, {.v = dmenucmd } },
+	{ 0,                            XF86XK_MonBrightnessDown, spawn, {.v = dimcmd } },
+	{ 0,                            XF86XK_MonBrightnessUp,   spawn, {.v = brightcmd } },
+	{ ShiftMask,                    XF86XK_MonBrightnessDown, spawn, {.v = fulldimcmd } },
+	{ ShiftMask,                    XF86XK_MonBrightnessUp,   spawn, {.v = fullbrightcmd } },
 };
 
 /* button definitions */
