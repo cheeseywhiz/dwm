@@ -55,7 +55,7 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", norm_bg, "-nf", norm_fg, "-sb", sel_bg, "-sf", sel_fg, NULL };
 static const char *termcmd[]  = { "st", NULL };
 /* sink tended to switch between 1 and 0 on old machine */
-#define SINK "0"
+#define SINK "@DEFAULT_SINK@"
 static const char *mutecmd[] = { "pactl", "set-sink-mute", SINK, "toggle", NULL };
 static const char *lowervolumecmd[] = { "pactl", "set-sink-volume", SINK, "-5%", NULL };
 static const char *raisevolumecmd[] = { "pactl", "set-sink-volume", SINK, "+5%", NULL };
