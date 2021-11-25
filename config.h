@@ -23,12 +23,13 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
+	//{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
+    { NULL,     "qemu",       NULL,            0,       1,           -1 },
 	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
 };
 
 /* layout(s) */
-static const float mfact     = 0.5; /* factor of master area size [0.05..0.95] */
+static const float mfact     = 0.65; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
 
@@ -61,8 +62,9 @@ static const char *lowervolumecmd[] = { "pactl", "set-sink-volume", SINK, "-5%",
 static const char *raisevolumecmd[] = { "pactl", "set-sink-volume", SINK, "+5%", NULL };
 static const char *dimcmd[] = { "xbacklight", "-dec", "10", NULL };
 static const char *brightcmd[] = { "xbacklight", "-inc", "10", NULL };
-static const char *fulldimcmd[] = { "xbacklight", "-set", "1", NULL };
+static const char *fulldimcmd[] = { "xbacklight", "-set", "0.1", NULL };
 static const char *fullbrightcmd[] = { "xbacklight", "-set", "100", NULL };
+static const char *toggle_bt_cmd[] = { "toggle-bt.sh" };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -83,7 +85,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
-	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
+	// { MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
@@ -100,13 +102,22 @@ static Key keys[] = {
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask|ControlMask, XK_q,      quit,           {0} },
 	{ 0,                            XF86XK_AudioMute,         spawn, {.v = mutecmd } },
+    { ControlMask,                  XK_F1,                    spawn, {.v = mutecmd } },
 	{ 0,                            XF86XK_AudioLowerVolume,  spawn, {.v = lowervolumecmd } },
+	{ ControlMask,                  XK_F2,                    spawn, {.v = lowervolumecmd } },
 	{ 0,                            XF86XK_AudioRaiseVolume,  spawn, {.v = raisevolumecmd } },
+	{ ControlMask,                  XK_F3,                    spawn, {.v = raisevolumecmd } },
 	{ 0,                            XF86XK_Search,            spawn, {.v = dmenucmd } },
+	{ ControlMask,                  XK_F10,                   spawn, {.v = dmenucmd } },
 	{ 0,                            XF86XK_MonBrightnessDown, spawn, {.v = dimcmd } },
+	// { ControlMask,                  XK_F5,                    spawn, {.v = dimcmd } },
 	{ 0,                            XF86XK_MonBrightnessUp,   spawn, {.v = brightcmd } },
+	{ ControlMask,                  XK_F6,                    spawn, {.v = brightcmd } },
 	{ ShiftMask,                    XF86XK_MonBrightnessDown, spawn, {.v = fulldimcmd } },
+	{ ShiftMask | ControlMask,      XK_F5,                    spawn, {.v = fulldimcmd } },
 	{ ShiftMask,                    XF86XK_MonBrightnessUp,   spawn, {.v = fullbrightcmd } },
+	{ ShiftMask | ControlMask,      XK_F6,                    spawn, {.v = fullbrightcmd } },
+    { MODKEY|ShiftMask,             XK_t,                     spawn, {.v = toggle_bt_cmd } },
 };
 
 /* button definitions */
